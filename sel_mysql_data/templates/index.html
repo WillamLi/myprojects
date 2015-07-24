@@ -1,55 +1,81 @@
-<!doctype html> <html lang="en"> <head> 
-<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script> 
-<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script> 
-<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script> 
-<script> 
-$.getJSON('/chart_data',function (result) {
-    $('#container').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        },
-        title: {
-            text: 'Browser market shares at a specific website, 2010'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    color: '#000000',
-                    connectorColor: '#000000',
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts图表
+        var myChart = echarts.init(document.getElementById('main')); 
+        
+        var option = {
+    title : {
+        text: '某站点用户访问来源',
+        subtext: '纯属虚构',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:[]
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true, 
+                type: ['pie', 'funnel'],
+                option: {
+                    funnel: {
+                        x: '25%',
+                        width: '50%',
+                        funnelAlign: 'left',
+                        max: 1548
+                    }
                 }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Browser share',
-            data: [
-                ['Firefox',   45.0],
-                ['IE',       26.8],
-                {
-                    name: 'Chrome',
-                    y: 12.8,
-                   
-                    
-                },
-                ['Safari',    8.5],
-                ['Opera',     6.2],
-                ['Others',   0.7]
+            },
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            //data:[{},{}]
+            data:[
+   
+  
+ 
+
+
             ]
-        }]
-    });
-}); 
- </script> 
-</head> 
-<body> 
-<div id="container" style="min-width:700px;height:400px"></div> 
-</body> 
-</html>
+        }
+    ]
+};
+                    
+
+        // 为echarts对象加载数据 
+        //myChart.setOption(option); 
+            $.getJSON('/chart_data',function(result){
+            console.log(result)
+            alert('ok')
+            option.legend[0]['data']=result[0]
+            option.series[0]['data']=result[:]
+            myChart.setOption(option); 
+})
+    </script>
+</body>

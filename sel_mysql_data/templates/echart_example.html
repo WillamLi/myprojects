@@ -1,0 +1,53 @@
+var myChart = echarts.init($('#basicChart')[0])
+var option = {
+    title: {
+        text: '真实接口--数据下面可以拖动区间数据',
+        subtext: '纯属虚构'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data: ['数据1', '数据2']
+    },
+    toolbox: {
+        show: true,
+        feature: {
+            saveAsImage: {
+                show: true
+            }
+        }
+    },
+    calculable: true,
+    xAxis: [{
+        type: 'category',
+        data: []
+    }],
+    yAxis: [{
+        type: 'value'
+    }],
+    dataZoom: {
+        show: true,
+        start: 50,
+        end: 80
+    },
+    series: [{
+        name: '数据1',
+        type: 'bar',
+        data: []
+    }, {
+        name: '数据2',
+        type: 'bar',
+        data: []
+    }]
+};
+
+$.getJSON('/demodata', function(data) {
+    option['xAxis'][0]['data'] = data.x
+    option.series[0].data = data.y1
+
+    option.series[1].data = data.y2
+
+    myChart.setOption(option);
+})
+
