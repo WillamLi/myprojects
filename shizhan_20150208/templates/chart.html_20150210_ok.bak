@@ -1,0 +1,56 @@
+<!doctype html> <html lang="en"> 
+<head> 
+<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js">
+</script> 
+<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js">
+</script> 
+<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js">
+</script> 
+<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts-more.js">
+</script>
+<script> 
+$.getJSON('/chart_data',function (result) {
+    $('#container').highcharts({
+        title: {
+            text: 'Monthly Average Temperature',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com',
+            x: -20
+        },
+        xAxis: {
+            categories: result.catg
+        },
+        yAxis: {
+            title: {
+                text: 'xxx元'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '元'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+//        series: [{'name':'pc','data':[100,90,120]}]
+        series: result.data
+    });
+});
+				
+
+</script> 
+</head> 
+<body> 
+<div id="container" style="min-width:700px;height:400px">
+</div>
+</body> 
+</html

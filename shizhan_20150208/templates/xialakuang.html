@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<!--1.python接口返回IDC的数据' <option value="0">IDC</option>'-->
+<!--2.前端一个select <select name="" id="selectOne">-->
+<!--3.$.get(url,funcation(result){$('#idc_select').html(result)}) -->
+
+
+<select name="" id="idc_select">
+</select>
+
+
+
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script>
+
+function load_data(){
+$.get('/sldata',function(result){
+        $('#idc_select').html(result).trigger('change')
+  })
+}
+
+load_data()
+
+$('#idc_select').on('change',function(){
+        var url='/sldata'
+        // console.log(val)
+       alert($(this).val())
+//        $.get(url,function(result){$('#idc_select').html(result)})
+})
+//    }).trigger('change')}  //手动出发
+</script>
+</body>
+</html>

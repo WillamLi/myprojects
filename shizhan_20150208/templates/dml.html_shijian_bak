@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+        <title> GRI calendar Demo </title>
+        <script type="text/javascript" src="/home/liran/liran/shizhan_20150208/templates/jquery.min.js"></script>
+        <script type="text/javascript" src="/home/liran/liran/shizhan_20150208/templates/dateRange.js"></script>
+        <link rel="stylesheet" type="text/css" href="/home/liran/liran/shizhan_20150208/templates/dateRange.css"/>
+        <style type="text/css">
+
+
+            
+        </style>
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .delete-btn{
+          cursor: pointer;
+          color: blue;
+        }
+    </style>
+
+  </head>
+  <body>
+
+        <h1>Calendar Demo</h1>
+        <div class="wrapper">
+            <!-- calendar demo1 :start -->
+            
+            <!-- calendar demo 2 :end-->
+            
+            <!-- calendar demo 3 : start-->
+            <h4>一、选择单天的时间段选择(TA的日期选择器)：</h4>
+            <div id="dCon_demo3">
+                开始时间：2013-04-14
+                <br/>
+                结束时间：2013-04-14
+                <br/>
+            </div>
+             <div class="ta_date" id="div_date_demo3">
+                    <span class="date_title" id="date_demo3"></span>
+                    <a class="opt_sel" id="input_trigger_demo3" href="#">
+                        <i class="i_orderd"></i>
+                    </a>
+                </div>
+                <div id="datePicker"></div>
+            <br/>
+
+
+            <script type="text/javascript">
+                var dateRange = new pickerDateRange('date_demo3', {
+                    isTodayValid : true,
+                    startDate : '2013-04-14',
+                    endDate : '2013-04-21',
+                    //needCompare : true,
+                    //isSingleDay : true,
+                    //shortOpr : true,
+                    defaultText : ' 至 ',
+                    inputTrigger : 'input_trigger_demo3',
+                    theme : 'ta',
+                    success : function(obj) {
+                        $("#dCon_demo3").html('开始时间 : ' + obj.startDate + '<br/>结束时间 : ' + obj.endDate);
+                    }
+                });
+
+            </script>
+
+
+            <!-- END -->
+<!--录入机器弹出窗-->  
+ <div class="modal fade" id="addModal">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title">添加机器</h4>
+       </div>
+     <div class="modal-body">
+        <p id="errorMsg" class="text-danger"></p>
+  <form  id="addForm" action="/add" method='GET' class="form-horizontal">
+        <div class="form-group">
+           <label for="" class="control-label col-md-2">
+            机器名
+           </label>
+        <input type="text" name="name" placeholder="请输入机器名">
+        </div>
+        <br>
+        <div class="form-group">
+         <label for="" class="control-label col-md-2">
+          ip
+         </label>
+         <input type="text" name="ip" placeholder="请输入ip">
+        </div>
+        <br>
+    <div class="form-group" >
+        <div class="col-md-offset-2">
+           <input type="submit" class="btn btn-primary" value="提交">
+           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+        </div>
+    </form>      
+     </div>
+<!--      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">提交</button>-->
+      </div>
+    </div>
+   </div>
+ </div>
+
+
+
+<!--修改弹窗-->
+<div class="modal fade" id="updateModal">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title">修改信息</h4>
+       </div>
+     <div class="modal-body">
+        <p id="errorMsgupdate" class="text-danger"></p>
+  <form  id="updateForm" action="/update" method='GET' class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2">
+            机器ID
+            </label>
+<!--   	    <div class="col-md-4">  -->
+            <input type="text"  id="upselid" name="id" readonly> 
+<!--        </div>    -->
+        </div>
+        <div class="form-group">
+           <label class="control-label col-md-2">
+            机器名
+           </label>
+<!--        <div class="col-md-2"></div> -->
+           <input id='upselname'  type="text" name="name" placeholder="请name"> 
+        </div>
+        <div class="form-group">
+         <label class="control-label col-md-2">
+          ip
+         </label>
+         <input id='upselip' type="text" name="ip" placeholder="请ip">
+        </div>
+    <div class="form-group" >
+        <div class="col-md-offset-2">
+           <input type="submit" class="btn btn-primary" vlue="更新">
+           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        </div>
+        </div>
+    </form>
+     </div>
+<!--      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">提交</button>-->
+      </div>
+    </div>
+   </div>
+ </div>
+
+
+
+<!--添加按钮 -->
+        <button id="clickBtn" class="btn btn-primary">
+               添加
+        </button>
+
+<!--修改按钮-->
+
+
+<!--jquery为了将python返回数据展示成表格定义的空table-->
+  <table
+
+
+ id="listTable" class="table table-striped table-bordered">
+    
+  </table>
+
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script>
+$('#clickBtn').on('click',function(){
+  $('#addModal').modal('show')
+})
+
+function load_data(){
+$.get('/list',function(result){
+        $('#listTable').html(result)
+   })
+}
+
+load_data()
+$('#addForm').on('submit',function(){
+  var str=$('#addForm').serialize()
+  var url= '/add?'+str
+  //$.get(url,function(result){
+  $.getJSON(url,function(result){
+//    alert(result['errno'])
+    if(result['errno']==0){
+        //alert(result['erron'])
+        alert('操作成功')
+        $('#addModal').modal('hide')
+//      $('#errorMsg').html('操作成功').show()
+        load_data()
+    }else{
+//      alert(result['errno'])
+        //alert('操作失败'+result['msg'])
+        $('#errorMsg').html('操作失败'+result['msg']).show()
+    }
+  })
+  return false
+})
+
+<!--document 指的是全局内容，整个网页确认删除的对话框  -->
+$(document).on("click",".delete-btn",function(){   
+
+  if (confirm('亲，确认删除吗？')){
+// 获取data-id属性，this是点击的元素，代表的是调用自己           
+    var id = $(this).attr('data-id')
+    var delete_url = '/delete?id=' + id
+    $.get(delete_url,function(result){
+       if (result=='success'){
+       //alert('删除成功')
+       load_data()
+       }else{
+         alert(result)
+       }
+})  
+};      
+});
+
+<!--捕获修改操作 -->
+$(document).on("click",".update-btn",function(){
+   var id=$(this).attr('up-id')
+   var url= '/upsel?id='+id
+   $.getJSON(url,function(result){
+	 $('#updateModal').modal('show')
+         $('#upselid').val(result['id'])
+  	 $('#upselname').val(result['name'])
+  	 $('#upselip').val(result['ip'])
+//         str='机器ID是'+result['id']+'机器名字是'+result['name']+',ip是'+result['ip']
+//  	 alert(str)
+  })
+})
+//根据弹窗更新操作
+   $('#updateForm').on("submit",function(){
+   var str=$('#updateForm').serialize()
+   alert(str)
+   var url= '/update?'+str
+   $.getJSON(url,function(result){
+       console.log(result)
+	if(result['errno']==0){
+          alert('操作成功')
+          $('#updateModal').modal('show')
+          load_data()
+       }else{
+            alert(result['msg'])
+            $('#errorMsgupdate').html('操作失败'+result['msg']).show()
+            }
+   })
+    return false   
+})
+</script>

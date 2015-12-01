@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .delete-btn{
+          cursor: pointer;
+          color: blue;
+        }
+    </style>
+
+<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/4.0.1/highcharts.js"></script>
+
+
+
+<script>
+
+$.getJSON('/chart_data',function(result){
+//    alert(result.catg)
+    $('#container').highcharts({
+        title: {
+            text: '水饺多少钱',
+            x: -20 //center
+        },
+//        subtitle: {
+//            text: '钱',
+//            x: -20
+//        },
+        xAxis: {
+            categories: result.catg
+        },
+        yAxis: {
+            title: {
+                text: 'XX元'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: result.data
+    });
+})
+
+
+
+</script>
+
+  </head>
+  <body>
+<div id="container" style="min-width:700px;height:400px"></div>
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>
